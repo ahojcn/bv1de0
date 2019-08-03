@@ -4,28 +4,41 @@ from django.shortcuts import render
 # from rest_framework.response import Response
 # from rest_framework import status
 
-from rest_framework import generics
-from .serializers import StudentSerializer, TeacherSerializer
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+import re
+
 from .models import Student, Teacher
 
 
-class StudentList(generics.ListCreateAPIView):
+class StudentLC(APIView):
     """
-    学生列表接口
-
-    1. get 获取所有学生
-    2. post 注册一个学生
+    学生 list and create
     """
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
 
+    def get(self, request):
+        """list"""
+        ret_list = list()
 
-class StudentDetail(generics.RetrieveUpdateAPIView):
-    """
-    学生详情接口
+        for stu in Student.objects.all():
+            tmp = {
+                'id': stu.id,
+                'username': stu.username,
+                'avatar': str(stu.avatar),
+                'motto': stu.motto,
+                'email': stu.email,
+                'is_active': stu.is_active,
+                'date_joined': stu.date_joined,
+                'last_login': stu.last_login,
+                'first_name': stu.first_name,
+                'last_name': stu.last_login
+            }
+            ret_list.append(tmp)
 
-    1. put 更新用户信息
-    2. get 获取用户信息
-    """
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+        return Response(ret_list, status=200)
+
+    def post(self, request):
+        """create"""
+        return Response('ok')
