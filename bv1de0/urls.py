@@ -14,18 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from django.views.static import serve
-from . import settings
+from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-
-    path('users/', include('apps.users.urls')),  # 用户
-    path('msgboard/', include('apps.msgboard.urls')),  # 留言
-    path('video/', include('apps.video.urls')),  # 视频
-    path('bclass/', include('apps.bclass.urls')),  # 班级
-
-    path('media/<path>', serve, {'document_root': settings.MEDIA_ROOT}),
 ]

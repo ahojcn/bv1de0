@@ -1,6 +1,5 @@
-
-# Created by https://www.gitignore.io/api/macos,python,django,pycharm,virtualenv
-# Edit at https://www.gitignore.io/?templates=macos,python,django,pycharm,virtualenv
+reated by https://www.gitignore.io/api/macos,python,django,pycharm
+# Edit at https://www.gitignore.io/?templates=macos,python,django,pycharm
 
 ### Django ###
 *.log
@@ -300,16 +299,4 @@ fabric.properties
 
 # Pyre type checker
 
-### VirtualEnv ###
-# Virtualenv
-# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
-[Bb]in
-[Ii]nclude
-[Ll]ib
-[Ll]ib64
-[Ll]ocal
-[Ss]cripts
-pyvenv.cfg
-pip-selfcheck.json
-
-# End of https://www.gitignore.io/api/macos,python,django,pycharm,virtualenv
+# End of https://www.gitignore.io/api/macos,python,django,pycharm
