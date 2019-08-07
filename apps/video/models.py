@@ -20,7 +20,7 @@ class Video(models.Model):
     """
     author = models.ForeignKey(to="user.User", on_delete=models.CASCADE, verbose_name="视频作者")
     title = models.CharField(max_length=128, verbose_name="视频标题")
-    file = models.FileField(upload_to="MEDIA/video/", verbose_name="视频文件")
+    file = models.FileField(upload_to="media/video/", verbose_name="视频文件")
     upload_time = models.DateTimeField(auto_now_add=True, verbose_name="上传日期")
 
     video_categories = models.ForeignKey(to="video.VideoCategory", on_delete=models.CASCADE, verbose_name="视频分类")

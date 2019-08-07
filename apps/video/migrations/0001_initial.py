@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=128, verbose_name='视频标题')),
-                ('file', models.FileField(upload_to='MEDIA/video/', verbose_name='视频文件')),
+                ('file', models.FileField(upload_to='media/video/', verbose_name='视频文件')),
                 ('upload_time', models.DateTimeField(auto_now_add=True, verbose_name='上传日期')),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='视频作者')),
                 ('video_categories', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='video.VideoCategory', verbose_name='视频分类')),
