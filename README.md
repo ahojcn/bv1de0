@@ -1,8 +1,8 @@
-<div style="width: 30%">
-  <center>
-    <img src="https://i.loli.net/2019/08/07/ztiWr6HgLje3bGP.png"/>
-  </center>
-</div>
+<center>
+  <div style="width: 30%">
+    <img src="./static/logo/favicon.ico"/>
+  </div>
+</center>
 
 bv1de0，又一个视频网站。
 
