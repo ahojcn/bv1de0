@@ -1,7 +1,7 @@
 <div align=center>
   <img src="https://i.loli.net/2019/08/07/ztiWr6HgLje3bGP.png" width="30%"/>
   <br><br>
-  <h4>bv1de0，一个视频站点。</h4>
+  <h4>bv1de0 一个视频站点</h4>
   <br><br>
 </div>
 
