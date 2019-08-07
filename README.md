@@ -1,4 +1,4 @@
-<div align=center><img src="./static/logo/favicon.ico"/></div>
+<div align=center><img src="https://i.loli.net/2019/08/07/ztiWr6HgLje3bGP.png" width="30%"/></div>
 
 
 
