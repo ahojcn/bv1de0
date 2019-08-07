@@ -1,11 +1,4 @@
-<p align = "center">
-  <div style="width: 30%">
-    <img src="./static/logo/favicon.ico"/>
-  </div>
-	<br><br>
-  bv1de0，又一个视频网站。
-	<br><br>
-</p>
+<div align=center><img src="./static/logo/favicon.ico"/></div>
 
 
 
