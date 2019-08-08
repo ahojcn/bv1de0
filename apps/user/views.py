@@ -6,15 +6,16 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
 
-from rest_framework.views import APIView
+from rest_framework import views, viewsets
 from rest_framework.response import Response
 
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired
 
 from apps.user.models import User, Token
+from apps.user.serializers import UserSerializer
 
 
-class UserRegisterView(APIView):
+class UserRegisterView(views.APIView):
     """
     用户注册接口
     """
@@ -94,7 +95,7 @@ class UserRegisterView(APIView):
         return Response(self._res_data)
 
 
-class UserActiveView(APIView):
+class UserActiveView(views.APIView):
     """
     用户激活接口
     """
@@ -135,7 +136,7 @@ class UserActiveView(APIView):
             return Response(self._res_data)
 
 
-class UserLoginView(APIView):
+class UserLoginView(views.APIView):
     """
     用户登录接口
     """
@@ -183,3 +184,11 @@ class UserLoginView(APIView):
             "nick_name": user_obj.nick_name,
         }
         return Response(self._res_data)
+
+
+class UserHomeView(viewsets.ModelViewSet):
+    """
+    个人中心信息展示
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

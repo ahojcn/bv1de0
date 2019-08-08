@@ -1,21 +1,18 @@
-"""bv1de0 URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.utils import CsrfToken, VerifyCode
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # 用户相关
+    path('apis/user/', include('apps.user.urls')),
+
+    # 视频相关
+    path('apis/video/', include('apps.video.urls')),
+
+    # 其他
+    path('apis/csrftoken/', CsrfToken.CsrfTokenView.as_view(), name="csrftoken"),
+    path('apis/verifycode/', VerifyCode.VerifyCodeView.as_view(), name="verifycode"),
 ]
