@@ -13,6 +13,9 @@ class VideoCategory(models.Model):
         verbose_name = "视频分类"
         verbose_name_plural = "视频分类"
 
+    def __str__(self):
+        return self.category_name
+
 
 class Video(models.Model):
     """
@@ -28,3 +31,6 @@ class Video(models.Model):
     class Meta:
         verbose_name = "视频"
         verbose_name_plural = "视频"
+
+    def __str__(self):
+        return self.title

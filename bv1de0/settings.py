@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'apps.comment',  # 留言
     'apps.user',  # 用户
     'apps.video',  # 视频
-    'apps.api',  # 开发接口
     'apps.utils',  # 工具
 ]
 
