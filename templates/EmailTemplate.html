@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <title>激活邮件</title>
     <style>
-        .text-muted {
-            color: #6c757d !important;
-        }
-
         .btn {
             display: inline-block;
             font-weight: 400;
@@ -33,76 +29,37 @@
             border-color: #007bff;
         }
 
-        .card {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: column;
-            flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(0, 0, 0, 0.125);
-            border-radius: 0.25rem;
+        div {
+            padding-bottom: 20px;
         }
-
-        .card-body {
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-            padding: 1.25rem;
-        }
-
-        .card-header {
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 0;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-        }
-
-        .alert {
-            position: relative;
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: 0.25rem;
-        }
-
-        .alert-warning {
-            color: #856404;
-            background-color: #fff3cd;
-            border-color: #ffeeba;
-        }
-
-        .card-footer {
-            padding: 0.75rem 1.25rem;
-            background-color: rgba(0, 0, 0, 0.03);
-            border-top: 1px solid rgba(0, 0, 0, 0.125);
-        }
-
     </style>
 </head>
 <body>
-<div class="card text-center">
-    <div class="card-header">
-        亲爱的{{ username }}，你好呀(*´▽｀)ノノ
-    </div>
-    <div class="card-body">
-        <h5 class="card-title">
-            欢迎使用 bv1de0 。
-        </h5>
-        <div class="alert alert-warning" role="alert">
-            你需要在 24 小时内点击下面的按钮来激活你的账号哟(＾Ｕ＾)ノ~ＹＯ。
-        </div>
-        <p>
-            提交 bug and issue 请直接 email <b>ahojcn@126.com</b>。
-        </p>
-        <a href="{{ active_url }}" class="btn btn-primary">点击激活</a>
-    </div>
-    <div class="card-footer text-muted">
-        Thanks
-    </div>
-</div>
 
+<div>
+    <center>
+        <div>
+            <img src="https://i.loli.net/2019/08/07/ztiWr6HgLje3bGP.png" width="100px" alt="bv1de0"/>
+            <br>
+            <b>bv1de0</b>
+        </div>
+
+        <div>
+            亲爱的{{ username }}，你好呀(*´▽｀)ノノ
+            <br>
+            你需要在 <span style="color: deeppink">24</span> 小时内点击下面的按钮来激活你的账号哟(＾Ｕ＾)ノ~ＹＯ。
+            <br>
+            BUG 和 ISSUE 请直接 EMAIL <b>ahojcn@126.com</b>
+        </div>
+
+        <div>
+            <a href="{{ active_url }}" class="btn btn-primary">点击激活账号</a>
+        </div>
+
+        <div>
+            &copy; bv1de0
+        </div>
+    </center>
+</div>
 </body>
 </html>

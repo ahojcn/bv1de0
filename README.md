@@ -1,19 +1,34 @@
 <div align=center>
-  <img src="https://i.loli.net/2019/08/07/ztiWr6HgLje3bGP.png" width="30%"/>
+  <img src="https://i.loli.net/2019/08/08/hgHb9ERsu6t2jB7.png" width="20%"/>
   <br><br>
-  <h4>bv1de0 一个视频站点</h4>
+  <h4>bv1de0，一个视频站点</h4>
   <br><br>
 </div>
 
+### Description
 
+**bvideo**，sounds like [bilibili](https://www.bilibili.com). I love **B site** :smile:，and I want to try to write it down.
 
+### Software Architecture
 
+Django + Vue.js
 
+……
 
-哈哈哈，好吧，名字是 bvideo，bilibili video。跟 b 站没半毛钱关系，不给 b 站丢人，就是很喜欢 b 站，想自己试试写一个体会下。
+### Installation
 
-感谢 [@木水](没有链接) 同学画的 logo。
+……
+
+### Contribution
+
+1. Fork the repository
+2. Create Feat_xxx branch
+3. Commit your code
+4. Create Pull Request
+
+### Thanks
+
+[木水](mailto:278339441@qq.com)
 
 ---
 
-未完待续……
