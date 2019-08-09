@@ -8,6 +8,9 @@ from apps.user.models import User
 class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
 
+    def get_avatar(self, user_obj):
+        return settings.MEDIA_URL + str(user_obj.avatar)
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'nick_name', 'motto', 'avatar', 'is_active', 'password']
@@ -23,6 +26,3 @@ class UserSerializer(serializers.ModelSerializer):
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.save()
         return instance
-
-    def get_avatar(self, user_obj):
-        return settings.MEDIA_URL + str(user_obj.avatar)

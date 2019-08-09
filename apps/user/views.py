@@ -22,7 +22,7 @@ class UserRegisterView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": None, "data": None}
+        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def post(self, request):
@@ -102,7 +102,7 @@ class UserActiveView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": None, "data": None}
+        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def get(self, request, token):
@@ -143,7 +143,7 @@ class UserLoginView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": None, "data": None}
+        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def post(self, request):
