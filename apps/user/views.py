@@ -191,7 +191,7 @@ class UserLoginView(views.APIView):
 
 class UserHomeView(viewsets.ModelViewSet):
     """
-    个人中心信息展示
+    个人中心信息
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer

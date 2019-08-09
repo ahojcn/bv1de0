@@ -5,6 +5,7 @@ from apps.user.views import (
     UserActiveView,
     UserHomeView
 )
+from django.conf import settings
 
 urlpatterns = [
     path('register/', UserRegisterView.as_view(), name="register"),
