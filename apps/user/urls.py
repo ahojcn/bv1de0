@@ -16,6 +16,6 @@ urlpatterns = [
     }), name="home"),
     path('home/<int:pk>/', UserHomeView.as_view({
         'get': 'retrieve',
-        'put': 'update',
+        'patch': 'update',
     })),
 ]

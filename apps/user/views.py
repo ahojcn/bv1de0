@@ -22,7 +22,7 @@ class UserRegisterView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
+        self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def post(self, request):
@@ -34,29 +34,29 @@ class UserRegisterView(views.APIView):
 
         # 数据完整性校验
         if not all([username, pwd, cpwd, email, verify_code]):
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "数据不完整"
             return Response(self._res_data)
 
         # 校验数据正确性
         if verify_code.upper() != request.session.get('verify_code', default="").upper():
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "验证码有误"
             return Response(self._res_data)
 
         user_obj = authenticate(username=username)
         if user_obj is not None:
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "用户已存在"
             return Response(self._res_data)
 
         if pwd != cpwd:
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "两次输入的密码不一致"
             return Response(self._res_data)
 
         if not re.match(r'^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$', email):
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "邮箱格式有误"
             return Response(self._res_data)
 
@@ -67,7 +67,7 @@ class UserRegisterView(views.APIView):
             user_obj.is_active = False
             user_obj.save()
         except Exception as e:
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "用户已存在"
             return Response(self._res_data)
 
@@ -84,7 +84,7 @@ class UserRegisterView(views.APIView):
         html = template.render({'username': username, 'email': email, 'active_url': active_url})
         send_mail('注册激活', '', settings.EMAIL_FROM, [email], html_message=html)
 
-        self._res_data["status_code"] = 0
+        self._res_data["status"] = 0
         self._res_data["msg"] = "注册成功，已发送激活邮件"
         self._res_data["data"] = {
             "username": user_obj.username,
@@ -102,7 +102,7 @@ class UserActiveView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
+        self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def get(self, request, token):
@@ -116,7 +116,7 @@ class UserActiveView(views.APIView):
             user.is_active = True
             user.save()
 
-            self._res_data["status_code"] = 0
+            self._res_data["status"] = 0
             self._res_data["msg"] = user.username + "激活成功"
             self._res_data["data"] = {
                 "username": user.username,
@@ -128,11 +128,11 @@ class UserActiveView(views.APIView):
             return Response(self._res_data)
         except SignatureExpired:
             # 激活链接过期
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "激活链接已过期"
             return Response(self._res_data)
         except Exception:
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "未知错误"
             return Response(self._res_data)
 
@@ -143,7 +143,7 @@ class UserLoginView(views.APIView):
     """
 
     def __init__(self, **kwargs):
-        self._res_data = {"status_code": -2, "msg": "未知错误", "data": {}}
+        self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
         super().__init__(**kwargs)
 
     def post(self, request):
@@ -154,19 +154,19 @@ class UserLoginView(views.APIView):
 
         # 校验数据
         if not all([username, pwd, verify_code]):
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "数据不完整"
             return Response(self._res_data)
 
         if verify_code.upper() != request.session.get('verify_code', default="").upper():
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "验证码有误"
             return Response(self._res_data)
 
         user_obj = authenticate(username=username, password=pwd)
         if user_obj is None:
             # 没有该用户
-            self._res_data["status_code"] = -1
+            self._res_data["status"] = -1
             self._res_data["msg"] = "用户名或密码错误"
             return Response(self._res_data)
 
@@ -174,7 +174,7 @@ class UserLoginView(views.APIView):
         random_str = str(uuid.uuid4())
         UserToken.objects.update_or_create(user=user_obj, defaults={"key": random_str})
 
-        self._res_data["status_code"] = 0
+        self._res_data["status"] = 0
         self._res_data["msg"] = "登录成功"
         self._res_data["data"] = {
             "username": user_obj.username,
@@ -196,3 +196,42 @@ class UserHomeView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     authentication_classes = [UserLoginAuthentication]
+
+    def __init__(self, **kwargs):
+        self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
+        super().__init__(**kwargs)
+
+    def update(self, request, *args, **kwargs):
+        user_obj = User.objects.get(id=kwargs["pk"])
+
+        nick_name = request.data.get("nick_name")
+        f = request.FILES.get("avatar")
+        motto = request.data.get("motto")
+
+        if motto is not None:
+            user_obj.motto = motto
+
+        if nick_name is not None:
+            user_obj.nick_name = nick_name
+
+        if f is not None:
+            file_path = settings.MEDIA_ROOT + "/img" + "/avatar/" + user_obj.username + "_" + f.name
+            with open(file_path, 'wb') as avatar:
+                for c in f.chunks():
+                    avatar.write(c)
+            user_obj.avatar = settings.MEDIA_URL + "img" + "/avatar/" + user_obj.username + "_" + f.name
+
+        user_obj.save()
+
+        self._res_data["status"] = 0
+        self._res_data["msg"] = "更新成功"
+        self._res_data["data"] = {
+            "id": user_obj.id,
+            "username": user_obj.username,
+            "nick_name": user_obj.nick_name,
+            "email": user_obj.email,
+            "motto": user_obj.motto,
+            "avatar": str(user_obj.avatar),
+            "is_active": user_obj.is_active
+        }
+        return Response(self._res_data)
