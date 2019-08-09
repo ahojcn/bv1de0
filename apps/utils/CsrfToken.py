@@ -6,7 +6,18 @@ from rest_framework.response import Response
 
 
 class CsrfTokenView(APIView):
+    """
+    获取 csrftoken
+    """
+
+    def __init__(self, **kwargs):
+        self._res_data = {"status_code": -2, "msg": None}
+        super().__init__(**kwargs)
+
     @csrf_exempt
     def post(self, request):
-        csrftoken = get_token(request)
-        return Response({'csrftoken': csrftoken})
+        self._res_data["status_code"] = 0
+        self._res_data["msg"] = "ok"
+        resp = Response(self._res_data)
+        resp.set_cookie('csrftoken', get_token(request))
+        return resp

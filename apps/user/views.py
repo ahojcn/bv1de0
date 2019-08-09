@@ -38,7 +38,7 @@ class UserRegisterView(views.APIView):
             return Response(self._res_data)
 
         # 校验数据正确性
-        if verify_code.upper() != request.session.get('verify_code').upper():
+        if verify_code.upper() != request.session.get('verify_code', default="").upper():
             self._res_data["status_code"] = -1
             self._res_data["msg"] = "验证码有误"
             return Response(self._res_data)
@@ -157,7 +157,7 @@ class UserLoginView(views.APIView):
             self._res_data["msg"] = "数据不完整"
             return Response(self._res_data)
 
-        if verify_code.upper() != request.session.get('verify_code').upper():
+        if verify_code.upper() != request.session.get('verify_code', default="").upper():
             self._res_data["status_code"] = -1
             self._res_data["msg"] = "验证码有误"
             return Response(self._res_data)
@@ -176,14 +176,16 @@ class UserLoginView(views.APIView):
         self._res_data["status_code"] = 0
         self._res_data["msg"] = "登录成功"
         self._res_data["data"] = {
-            "user_token": random_str,
             "username": user_obj.username,
             "avatar": settings.STATIC_URL + "default_avatar.png",
             "is_active": user_obj.is_active,
             "last_login": user_obj.last_login,
             "nick_name": user_obj.nick_name,
         }
-        return Response(self._res_data)
+
+        resp = Response(self._res_data)
+        resp.set_cookie('user_token', random_str)
+        return
 
 
 class UserHomeView(viewsets.ModelViewSet):
