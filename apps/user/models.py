@@ -28,9 +28,9 @@ class User(AbstractUser):
         return self.username
 
 
-class Token(models.Model):
+class UserToken(models.Model):
     """
-    token 类
+    user token 类
     """
     key = models.CharField(max_length=128, verbose_name="token_key")
     user = models.OneToOneField(User, related_name="auth_token", on_delete=models.CASCADE, verbose_name="所属用户")

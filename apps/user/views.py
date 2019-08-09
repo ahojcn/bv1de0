@@ -11,8 +11,9 @@ from rest_framework.response import Response
 
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired
 
-from apps.user.models import User, Token
+from apps.user.models import User, UserToken
 from apps.user.serializers import UserSerializer
+from apps.user.authentications import UserLoginAuthentication
 
 
 class UserRegisterView(views.APIView):
@@ -171,7 +172,7 @@ class UserLoginView(views.APIView):
 
         # 生成或更新 用户相关的 token
         random_str = str(uuid.uuid4())
-        Token.objects.update_or_create(user=user_obj, defaults={"key": random_str})
+        UserToken.objects.update_or_create(user=user_obj, defaults={"key": random_str})
 
         self._res_data["status_code"] = 0
         self._res_data["msg"] = "登录成功"
@@ -185,7 +186,7 @@ class UserLoginView(views.APIView):
 
         resp = Response(self._res_data)
         resp.set_cookie('user_token', random_str)
-        return
+        return resp
 
 
 class UserHomeView(viewsets.ModelViewSet):
@@ -194,3 +195,4 @@ class UserHomeView(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [UserLoginAuthentication]
