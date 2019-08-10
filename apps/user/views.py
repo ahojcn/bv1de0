@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired
 
 from apps.user.models import User, UserToken
-from apps.user.serializers import UserSerializer
+from apps.user.serializers import UserHomeSerializer
 from apps.user.authentications import UserLoginAuthentication
 
 
@@ -194,7 +194,7 @@ class UserHomeView(viewsets.ModelViewSet):
     个人中心信息
     """
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserHomeSerializer
     authentication_classes = [UserLoginAuthentication]
 
     def __init__(self, **kwargs):

@@ -1,20 +1,46 @@
-from django.conf import settings
-
 from rest_framework import serializers
 
 from apps.user.models import User
+from apps.video.models import Video
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserHomeSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
+    video_list = serializers.SerializerMethodField()
 
     def get_avatar(self, user_obj):
-        return settings.MEDIA_URL + str(user_obj.avatar)
+        return user_obj.avatar.name
+
+    def get_video_list(self, user_obj):
+        resp_list = []
+        for item in Video.objects.filter(author=user_obj):
+            temp_json = {
+                "title": item.title,
+                "file": item.file.url,
+                "upload_time": int(item.upload_time.timestamp()),
+                "video_categories": item.video_categories.category_name
+            }
+            resp_list.append(temp_json)
+        return resp_list
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'nick_name', 'motto', 'avatar', 'is_active', 'password']
-        read_only_fields = ['id', 'email', 'is_active']
+        fields = [
+            'id',
+            'username',
+            'email',
+            'nick_name',
+            'motto',
+            'avatar',
+            'is_active',
+            'password',
+            'video_list'
+        ]
+        read_only_fields = [
+            'id',
+            'email',
+            'is_active'
+        ]
         extra_kwargs = {
             'password': {'write_only': True},
         }
