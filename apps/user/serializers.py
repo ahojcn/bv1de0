@@ -18,7 +18,7 @@ class UserHomeSerializer(serializers.ModelSerializer):
                 "title": item.title,
                 "file": item.file.url,
                 "upload_time": int(item.upload_time.timestamp()),
-                "video_categories": item.video_categories.category_name
+                "categories": item.video_categories.category_name
             }
             resp_list.append(temp_json)
         return resp_list

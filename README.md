@@ -5,21 +5,39 @@
   <br><br>
 </div>
 
-### Description
 
-**bvideo**，sounds like [bilibili](https://www.bilibili.com). I love **B site** :smile:，and I want to try to write it down.
+### 简介
 
-### Software Architecture
+**bvideo**，一个视频网站。
 
-Django + Vue.js
+使用 Django ~~和 Vue~~ 开发，前端还没写呢，嘿嘿。
+
+#### TODO
+
+我将继续完善它。
+
+- [x] 验证码
+- [x] 用户信息 LCRU 以及简单的用户权限控制
+- [x] 伪 Token 用户登录
+- [x] 视频、视频分类的 LCRU
+- [x] 用户邮箱验证激活
+
+- [ ] 用户在视频底下评论
+- [ ] 评论使用 Markdown
+- [ ] 用户权限限制
+- [ ] 用户登录的 Token
+- [ ] 有效时间控制
+- [ ] 使用 celery 来发送邮件提高效率
+- [ ] 视频处理(转码， 还在学习FFmpeg 中)
+- [ ] 优化代码逻辑
+- [ ] 分布式视频文件存储
+- [ ] 视频弹幕
+
+### 使用
 
 ……
 
-### Installation
-
-……
-
-### Contribution
+### 参与
 
 1. Fork the repository
 2. Create Feat_xxx branch
@@ -28,7 +46,7 @@ Django + Vue.js
 
 ### Thanks
 
-[木水](mailto:278339441@qq.com)
+LOGO：[木水](mailto:278339441@qq.com)
 
 ---
 
