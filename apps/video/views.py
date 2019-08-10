@@ -26,6 +26,9 @@ class VideoCategoryViewSet(viewsets.ModelViewSet):
         super().__init__(**kwargs)
 
     def list(self, request, *args, **kwargs):
+        """
+        列出所有分类
+        """
         for i in VideoCategory.objects.all():
             temp_json = {
                 "id": i.id,
@@ -39,6 +42,9 @@ class VideoCategoryViewSet(viewsets.ModelViewSet):
         return Response(self._res_data)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        获取单个分类的信息
+        """
         category_obj = VideoCategory.objects.filter(id=kwargs["pk"]).first()
         if category_obj is None:
             self._res_data["status"] = -1
@@ -65,6 +71,9 @@ class VideoViewSet(viewsets.ModelViewSet):
         super().__init__(**kwargs)
 
     def list(self, request, *args, **kwargs):
+        """
+        列出所有视频
+        """
         for obj in Video.objects.all().order_by("-upload_time"):
             item = {
                 "id": obj.id,
@@ -82,7 +91,8 @@ class VideoViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """
-        title, author, video_categories, file
+        上传一个视频
+        参数：title, author, video_categories, file
         """
         title = request.data.get("title")
         author_id = request.data.get("author")
@@ -115,6 +125,9 @@ class VideoViewSet(viewsets.ModelViewSet):
         return Response(self._res_data)
 
     def retrieve(self, request, *args, **kwargs):
+        """
+        获取单个视频的信息
+        """
         video_id = kwargs["pk"]
         video_obj = Video.objects.filter(id=video_id).first()
 

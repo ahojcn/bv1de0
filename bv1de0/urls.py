@@ -12,6 +12,9 @@ urlpatterns = [
     # 视频相关
     path('apis/video/', include('apps.video.urls')),
 
+    # 评论相关
+    path('apis/comment/', include('apps.comment.urls')),
+
     # 其他
     path('apis/csrftoken/', CsrfToken.CsrfTokenView.as_view(), name="csrftoken"),
     path('apis/verifycode/', VerifyCode.VerifyCodeView.as_view(), name="verifycode"),
