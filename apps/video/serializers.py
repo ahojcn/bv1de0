@@ -9,7 +9,20 @@ from apps.video.models import (
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ['id', 'title', 'file', 'upload_time', 'author', 'video_categories']
+        fields = ['id', 'title', 'file_url', 'upload_time', 'author', 'categories']
+
+    file_url = serializers.SerializerMethodField()
+    author = serializers.SerializerMethodField()
+    categories = serializers.SerializerMethodField()
+
+    def get_file_url(self, video_obj):
+        return video_obj.file.url
+
+    def get_author(self, video_obj):
+        return video_obj.author.username
+
+    def get_categories(self, video_obj):
+        return video_obj.video_categories.category_name
 
 
 class VideoCategorySerializer(serializers.ModelSerializer):

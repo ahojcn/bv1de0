@@ -52,3 +52,14 @@ class UserHomeSerializer(serializers.ModelSerializer):
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.save()
         return instance
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "nick_name", "avatar", "motto"]
+
+    avatar = serializers.SerializerMethodField()
+
+    def get_avatar(self, user_obj):
+        return user_obj.avatar.name

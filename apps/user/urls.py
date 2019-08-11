@@ -3,7 +3,8 @@ from apps.user.views import (
     UserLoginView,
     UserRegisterView,
     UserActiveView,
-    UserHomeView
+    UserHomeView,
+    UserListViewSet
 )
 
 urlpatterns = [
@@ -18,4 +19,8 @@ urlpatterns = [
         'get': 'retrieve',
         'patch': 'update',
     })),
+
+    path('', UserListViewSet.as_view({
+        "get": "list"
+    }))
 ]

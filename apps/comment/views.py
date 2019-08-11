@@ -11,6 +11,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     评论视图
     """
 
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.all().order_by('-add_time')
     serializer_class = CommentSerializer
 

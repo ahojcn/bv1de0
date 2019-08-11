@@ -15,6 +15,7 @@ from apps.user.models import (
     User,
     UserToken,
 )
+from apps.video.paginations import VideoListPagination
 
 
 class VideoCategoryViewSet(viewsets.ModelViewSet):
@@ -63,31 +64,33 @@ class VideoCategoryViewSet(viewsets.ModelViewSet):
 
 
 class VideoViewSet(viewsets.ModelViewSet):
-    queryset = Video.objects.all()
+    queryset = Video.objects.all().order_by('-upload_time')
     serializer_class = VideoSerializer
+    pagination_class = VideoListPagination
 
     def __init__(self, **kwargs):
         self._res_data = {"status": -2, "msg": "未知错误", "data": []}
         super().__init__(**kwargs)
 
-    def list(self, request, *args, **kwargs):
-        """
-        列出所有视频
-        """
-        for obj in Video.objects.all().order_by("-upload_time"):
-            item = {
-                "id": obj.id,
-                "author": obj.author.username,
-                "categories": obj.video_categories.category_name,
-                "title": obj.title,
-                "file": obj.file.url,
-                "upload_time": int(obj.upload_time.timestamp())
-            }
-            self._res_data["data"].append(item)
-
-        self._res_data["status"] = 0
-        self._res_data["msg"] = "所有视频"
-        return Response(self._res_data)
+    # def list(self, request, *args, **kwargs):
+    #     """
+    #     列出所有视频
+    #     """
+    #     for obj in Video.objects.all().order_by("-upload_time"):
+    #         item = {
+    #             "id": obj.id,
+    #             "author": obj.author.username,
+    #             "categories": obj.video_categories.category_name,
+    #             "title": obj.title,
+    #             "file": obj.file.url,
+    #             "upload_time": int(obj.upload_time.timestamp())
+    #         }
+    #         self._res_data["data"].append(item)
+    #
+    #     self._res_data["status"] = 0
+    #     self._res_data["msg"] = "所有视频"
+    #     super().list(request)
+    #     return Response(self._res_data)
 
     def create(self, request, *args, **kwargs):
         """
@@ -108,7 +111,7 @@ class VideoViewSet(viewsets.ModelViewSet):
         category_obj = VideoCategory.objects.filter(id=category_id).first()
         author_obj = User.objects.filter(id=author_id).first()
 
-        file_path = settings.MEDIA_ROOT + "/video/" + author_obj.username + f.name
+        file_path = settings.MEDIA_ROOT + "/video/" + author_obj.username + "-" + f.name
         with open(file_path, "wb") as video:
             for v in f.chunks():
                 video.write(v)

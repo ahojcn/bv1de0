@@ -12,8 +12,9 @@ from rest_framework.response import Response
 from itsdangerous import TimedJSONWebSignatureSerializer, SignatureExpired
 
 from apps.user.models import User, UserToken
-from apps.user.serializers import UserHomeSerializer
+from apps.user.serializers import UserHomeSerializer, UserSerializer
 from apps.user.authentications import UserLoginAuthentication
+from apps.user.paginations import UserListPagination
 
 
 class UserRegisterView(views.APIView):
@@ -235,3 +236,12 @@ class UserHomeView(viewsets.ModelViewSet):
             "is_active": user_obj.is_active
         }
         return Response(self._res_data)
+
+
+class UserListViewSet(viewsets.ModelViewSet):
+    """
+    用户 list 接口
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    pagination_class = UserListPagination
