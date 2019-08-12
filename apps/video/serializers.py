@@ -14,6 +14,7 @@ class VideoSerializer(serializers.ModelSerializer):
     file_url = serializers.SerializerMethodField()
     author = serializers.SerializerMethodField()
     categories = serializers.SerializerMethodField()
+    upload_time = serializers.SerializerMethodField()
 
     def get_file_url(self, video_obj):
         return video_obj.file.url
@@ -23,6 +24,9 @@ class VideoSerializer(serializers.ModelSerializer):
 
     def get_categories(self, video_obj):
         return video_obj.video_categories.category_name
+
+    def get_upload_time(self, video_obj):
+        return video_obj.upload_time.timestamp()
 
 
 class VideoCategorySerializer(serializers.ModelSerializer):

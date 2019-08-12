@@ -13,6 +13,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = ["id", "detail", "add_time", "user_info", "video_to"]
 
     user_info = serializers.SerializerMethodField()
+    add_time = serializers.SerializerMethodField()
 
     def get_user_info(self, com_obj):
         user_info = {
@@ -20,3 +21,6 @@ class CommentSerializer(serializers.ModelSerializer):
             "avatar": com_obj.user.avatar.url
         }
         return user_info
+
+    def get_add_time(self, com_obj):
+        return com_obj.add_time.timestamp()
