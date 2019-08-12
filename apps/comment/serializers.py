@@ -10,4 +10,13 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = "__all__"
+        fields = ["id", "detail", "add_time", "user_info", "video_to"]
+
+    user_info = serializers.SerializerMethodField()
+
+    def get_user_info(self, com_obj):
+        user_info = {
+            "username": com_obj.user.username,
+            "avatar": com_obj.user.avatar.url
+        }
+        return user_info

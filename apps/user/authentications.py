@@ -18,4 +18,6 @@ class UserLoginAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed('未登录')
 
         user_token_obj = UserToken.objects.filter(key=user_token).first()
+        if user_token_obj is None:
+            raise exceptions.AuthenticationFailed('用户身份无效')
         return user_token_obj.user, user_token_obj

@@ -9,7 +9,7 @@ class UserHomeSerializer(serializers.ModelSerializer):
     video_list = serializers.SerializerMethodField()
 
     def get_avatar(self, user_obj):
-        return user_obj.avatar.name
+        return user_obj.avatar.url
 
     def get_video_list(self, user_obj):
         resp_list = []
@@ -62,4 +62,4 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
 
     def get_avatar(self, user_obj):
-        return user_obj.avatar.name
+        return user_obj.avatar.url

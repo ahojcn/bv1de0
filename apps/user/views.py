@@ -40,10 +40,10 @@ class UserRegisterView(views.APIView):
             return Response(self._res_data)
 
         # 校验数据正确性
-        if verify_code.upper() != request.session.get('verify_code', default="").upper():
-            self._res_data["status"] = -1
-            self._res_data["msg"] = "验证码有误"
-            return Response(self._res_data)
+        # if verify_code.upper() != request.session.get('verify_code', default="").upper():
+        #     self._res_data["status"] = -1
+        #     self._res_data["msg"] = "验证码有误"
+        #     return Response(self._res_data)
 
         user_obj = authenticate(username=username)
         if user_obj is not None:
@@ -198,44 +198,44 @@ class UserHomeView(viewsets.ModelViewSet):
     serializer_class = UserHomeSerializer
     authentication_classes = [UserLoginAuthentication]
 
-    def __init__(self, **kwargs):
-        self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
-        super().__init__(**kwargs)
-
-    def update(self, request, *args, **kwargs):
-        user_obj = User.objects.get(id=kwargs["pk"])
-
-        nick_name = request.data.get("nick_name")
-        f = request.FILES.get("avatar")
-        motto = request.data.get("motto")
-
-        if motto is not None:
-            user_obj.motto = motto
-
-        if nick_name is not None:
-            user_obj.nick_name = nick_name
-
-        if f is not None:
-            file_path = settings.MEDIA_ROOT + "/img" + "/avatar/" + user_obj.username + "_" + f.name
-            with open(file_path, 'wb') as avatar:
-                for c in f.chunks():
-                    avatar.write(c)
-            user_obj.avatar = settings.MEDIA_URL + "img" + "/avatar/" + user_obj.username + "_" + f.name
-
-        user_obj.save()
-
-        self._res_data["status"] = 0
-        self._res_data["msg"] = "更新成功"
-        self._res_data["data"] = {
-            "id": user_obj.id,
-            "username": user_obj.username,
-            "nick_name": user_obj.nick_name,
-            "email": user_obj.email,
-            "motto": user_obj.motto,
-            "avatar": str(user_obj.avatar),
-            "is_active": user_obj.is_active
-        }
-        return Response(self._res_data)
+    # def __init__(self, **kwargs):
+    #     self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
+    #     super().__init__(**kwargs)
+    #
+    # def update(self, request, *args, **kwargs):
+    #     user_obj = User.objects.get(id=kwargs["pk"])
+    #
+    #     nick_name = request.data.get("nick_name")
+    #     f = request.FILES.get("avatar")
+    #     motto = request.data.get("motto")
+    #
+    #     if motto is not None:
+    #         user_obj.motto = motto
+    #
+    #     if nick_name is not None:
+    #         user_obj.nick_name = nick_name
+    #
+    #     if f is not None:
+    #         file_path = settings.MEDIA_ROOT + "/img" + "/avatar/" + user_obj.username + "_" + f.name
+    #         with open(file_path, 'wb') as avatar:
+    #             for c in f.chunks():
+    #                 avatar.write(c)
+    #         user_obj.avatar = settings.MEDIA_URL + "img" + "/avatar/" + user_obj.username + "_" + f.name
+    #
+    #     user_obj.save()
+    #
+    #     self._res_data["status"] = 0
+    #     self._res_data["msg"] = "更新成功"
+    #     self._res_data["data"] = {
+    #         "id": user_obj.id,
+    #         "username": user_obj.username,
+    #         "nick_name": user_obj.nick_name,
+    #         "email": user_obj.email,
+    #         "motto": user_obj.motto,
+    #         "avatar": str(user_obj.avatar),
+    #         "is_active": user_obj.is_active
+    #     }
+    #     return Response(self._res_data)
 
 
 class UserListViewSet(viewsets.ModelViewSet):
