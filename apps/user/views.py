@@ -198,6 +198,11 @@ class UserHomeView(viewsets.ModelViewSet):
     serializer_class = UserHomeSerializer
     authentication_classes = [UserLoginAuthentication]
 
+    def destroy(self, request, *args, **kwargs):
+        resp = Response()
+        resp.set_cookie('user_token', "")
+        return resp
+
     # def __init__(self, **kwargs):
     #     self._res_data = {"status": -2, "msg": "未知错误", "data": {}}
     #     super().__init__(**kwargs)

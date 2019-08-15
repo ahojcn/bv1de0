@@ -5,7 +5,7 @@ class UserListPagination(PageNumberPagination):
     """
     获取用户列表的分页器
     """
-    page_size = 12
+    page_size = 64
     page_query_param = "page"
     page_size_query_param = "size"
-    max_page_size = 12
+    max_page_size = 64

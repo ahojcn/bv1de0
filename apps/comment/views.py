@@ -16,4 +16,4 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     pagination_class = CommentPagination
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('video_to',)
+    search_fields = ('video_to__id',)

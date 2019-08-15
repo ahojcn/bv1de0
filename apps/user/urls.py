@@ -18,6 +18,7 @@ urlpatterns = [
     path('home/<int:pk>/', UserHomeView.as_view({
         'get': 'retrieve',
         'patch': 'update',
+        'delete': 'destroy'
     })),
 
     path('', UserListViewSet.as_view({

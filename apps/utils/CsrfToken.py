@@ -7,7 +7,7 @@ from rest_framework.response import Response
 
 class CsrfTokenView(APIView):
     """
-    获取 csrftoken
+    获取
     """
 
     def __init__(self, **kwargs):

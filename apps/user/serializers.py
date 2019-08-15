@@ -26,21 +26,10 @@ class UserHomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id',
-            'username',
-            'email',
-            'nick_name',
-            'motto',
-            'avatar',
-            'is_active',
-            'password',
-            'video_list'
+            'id', 'username', 'email', 'nick_name', 'motto',
+            'avatar', 'is_active', 'password', 'video_list'
         ]
-        read_only_fields = [
-            'id',
-            'email',
-            'is_active'
-        ]
+        read_only_fields = ['id', 'email', 'is_active']
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -57,9 +46,13 @@ class UserHomeSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "nick_name", "avatar", "motto"]
+        fields = ["id", "username", "nick_name", "avatar", "motto", "date_joined"]
 
     avatar = serializers.SerializerMethodField()
+    date_joined = serializers.SerializerMethodField()
 
     def get_avatar(self, user_obj):
         return user_obj.avatar.url
+
+    def get_date_joined(self, user_obj):
+        return user_obj.date_joined.timestamp()
